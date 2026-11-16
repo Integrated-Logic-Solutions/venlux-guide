@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>Venlux Installer Screens</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,6 +88,8 @@
   footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
 
   .print-only { display: none; }
+  /* Preview: shown while the guide is shared for feedback; remove with the noindex tag at launch. */
+  .preview { margin: 0 0 24px; padding: 8px 12px; border-radius: 6px; background: var(--accent-soft); color: var(--ink); font-size: 13px; font-weight: 600; }
   @media print { .screen-only { display: none; } }
 
   /* US Letter: a cover with contents, each section on a new page, two screenshots per page. */
@@ -141,6 +144,7 @@
   </nav>
 
   <main>
+    <p class="preview screen-only" role="note">Preview: a work in progress, shared for feedback.</p>
     <header class="top">
       <div class="eyebrow">Venlux lighting control · for integrators and installers</div>
       <h1>The screens you'll use on a Venlux job</h1>
