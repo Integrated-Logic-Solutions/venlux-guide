@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Venlux Installer Screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one reading column; a sticky section index on wide screens; screenshots full column width, captions beside the number. */
+  :root {
+    --bg: #f4f4f1;
+    --surface: #ffffff;
+    --ink: #17181b;
+    --muted: #5d6068;
+    --rule: #dcdcd5;
+    --accent: #8a8320;        /* the Venlux yellow, darkened to read on light */
+    --accent-soft: #ecead0;
+    --shot-edge: #c9c9c1;
+    --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101114; --surface: #17181c; --ink: #e9eaee; --muted: #9a9ea8; --rule: #2a2c32;
+      --accent: #d2cb5e; --accent-soft: #2a2918; --shot-edge: #33363d; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101114; --surface: #17181c; --ink: #e9eaee; --muted: #9a9ea8; --rule: #2a2c32;
+    --accent: #d2cb5e; --accent-soft: #2a2918; --shot-edge: #33363d; color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.6 var(--font-body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-block: 48px 80px;
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 48px;
+  }
+  @media (max-width: 860px) { .page { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 28px 56px; } nav.index { display: none; } }
+
+  nav.index { position: sticky; top: calc(24px + env(safe-area-inset-top, 0px)); align-self: start; font-size: 13px; }
+  nav.index ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  nav.index a { color: var(--muted); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+  nav.index a:hover, nav.index a:focus-visible { color: var(--ink); background: var(--accent-soft); outline: none; }
+  nav.index .brand { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.14em; font-size: 12px; color: var(--accent); margin-bottom: 14px; padding-left: 8px; }
+
+  header.top { display: grid; gap: 14px; border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
+  .eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 5vw, 44px); line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+  .lede { max-width: 66ch; color: var(--muted); font-size: 16px; margin: 0; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--muted); }
+  .facts b { color: var(--ink); font-weight: 600; }
+  .facts a { color: var(--accent); font-weight: 600; }
+
+  section { padding-top: 44px; display: grid; gap: 26px; }
+  section > header { display: grid; gap: 8px; max-width: 70ch; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1.2; margin: 0; text-wrap: balance; }
+  section > header p { margin: 0; color: var(--muted); }
+
+  figure { margin: 0; display: grid; gap: 12px; }
+  figure img {
+    display: block; width: 100%; height: auto; max-width: 100%;
+    border: 1px solid var(--shot-edge); border-radius: 10px; background: #0d0e10;
+  }
+  figure.panel img { max-width: 860px; }
+  figcaption { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 4px 12px; max-width: 78ch; }
+  figcaption .n { font-family: var(--font-mono); font-size: 12px; color: var(--accent); padding-top: 3px; font-variant-numeric: tabular-nums; }
+  figcaption h3 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+  figcaption p { grid-column: 2; margin: 0; color: var(--muted); }
+  figcaption .where { grid-column: 2; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+  code { font-family: var(--font-mono); font-size: 0.88em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+
+  .note { border-left: 3px solid var(--accent); background: var(--surface); padding: 14px 18px; border-radius: 0 8px 8px 0; color: var(--muted); max-width: 72ch; }
+  .note b { color: var(--ink); }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
+
+  .print-only { display: none; }
+  @media print { .screen-only { display: none; } }
+
+  /* US Letter: a cover with contents, each section on a new page, two screenshots per page. */
+  @page { size: 8.5in 11in; margin: 0.55in 0.6in 0.6in; }
+  @media print {
+    :root { --bg: #fff; --surface: #f6f6f2; --ink: #111; --muted: #444; --rule: #ccc; --accent: #6f6912; --accent-soft: #f1efd6; color-scheme: light; }
+    html, body { background: #fff; }
+    body { font-size: 10pt; line-height: 1.45; padding: 0; }
+    .page { display: block; padding: 0; max-width: none; }
+    nav.index { display: none; }
+    .print-only { display: block; }
+
+    header.top { border: 0; padding: 2.2in 0 0; gap: 16pt; break-after: page; }
+    h1 { font-size: 30pt; }
+    .lede { font-size: 11.5pt; max-width: none; }
+    .facts { font-size: 10pt; }
+    .contents { margin-top: 28pt; border-top: 1px solid var(--rule); padding-top: 14pt; }
+    .contents ol { margin: 8pt 0 0; padding-left: 1.3em; display: grid; gap: 5pt; font-size: 11pt; }
+    .contents li span { color: var(--muted); }
+
+    section { break-before: page; padding-top: 0; gap: 16pt; }
+    section > header { gap: 4pt; max-width: none; break-after: avoid; }
+    h2 { font-size: 18pt; }
+    section > header p { font-size: 10pt; }
+
+    figure { break-inside: avoid; gap: 6pt; margin: 0; }
+    figure img, figure.panel img {
+      width: auto; max-width: 100%; max-height: 3.1in; margin: 0 auto;
+      border-radius: 6px; border-color: #bbb;
+    }
+    figcaption { max-width: none; gap: 2pt 10pt; }
+    figcaption h3 { font-size: 11pt; }
+    figcaption p, figcaption .where { font-size: 9.5pt; }
+    .note { break-inside: avoid; font-size: 9.5pt; }
+    footer { margin-top: 18pt; font-size: 8.5pt; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <nav class="index" aria-label="Sections">
+    <div class="brand">VENLUX</div>
+    <ol>
+      <li><a href="#venlux-setup">Venlux Setup</a></li>
+      <li><a href="#master">The master panel</a></li>
+      <li><a href="#setup">Setting up a site</a></li>
+      <li><a href="#integrations">Integrations</a></li>
+      <li><a href="#devices">Devices and panels</a></li>
+      <li><a href="#room-panels">Room panels</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header class="top">
+      <div class="eyebrow">Venlux lighting control · for integrators and installers</div>
+      <h1>The screens you'll use on a Venlux job</h1>
+      <p class="lede">Venlux runs on Crestron 4-Series processors and controls Zūm wired lighting plus DMX through Pharos. The site is described in Venlux Setup, a desktop app, and deployed to the processors. On site, one app serves two kinds of touch panel: the <b>master</b>, which sets up and runs the whole site, and <b>room panels</b>, which give each space its scenes and brightness. This guide walks through the screens in the order you'll meet them on a job.</p>
+      <div class="facts">
+        <span><b>Demo site:</b> Riverside Events Center (18 areas, 510 zones, 3 processors)</span>
+        <span><b>Version:</b> November 2026</span>
+        <span class="screen-only"><a href="venlux-installer-screens.pdf">Download the PDF (8.5 × 11)</a></span>
+      </div>
+      <div class="contents print-only">
+        <div class="eyebrow">Contents</div>
+        <ol>
+          <li>Venlux Setup <span>· site, zones, devices, processors, deploying, the check</span></li>
+          <li>The master panel <span>· areas, zones, site scenes</span></li>
+          <li>Setting up a site <span>· areas, rooms, keypads, processors, occupancy, room panels, branding, workbook import</span></li>
+          <li>Integrations <span>· adding one, the integrator document</span></li>
+          <li>Devices and panels <span>· scan, device plan, panels, users, system</span></li>
+          <li>Room panels <span>· splash, room, divide or combine, PIN, Adjust</span></li>
+        </ol>
+      </div>
+    </header>
+
+    <section id="venlux-setup">
+      <header>
+        <div class="eyebrow">1 · In the office</div>
+        <h2>Venlux Setup</h2>
+        <p>A desktop app for the intake workbook: one Excel file that describes the site. Fill it in from the drawings, check it, then deploy it to the processors. The workbook still opens in Excel.</p>
+      </header>
+
+      <figure>
+        <img src="img/vs-01-site.jpg" alt="Venlux Setup, Site tab: venue name, processor, master control and addresses" loading="lazy">
+        <figcaption><span class="n">01</span><h3>Site</h3><p>The venue name, the processor (or the Processors sheet, for several), how the master is reached (WebXPanel, iPad or both) and the venue contact. Every sheet is a tab along the top; the Check count shows what still needs attention.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-02-zones.jpg" alt="Zones sheet: one row per zone with area, room, description, device, dimming and fixtures" loading="lazy">
+        <figcaption><span class="n">02</span><h3>Zones</h3><p>One row per zone: area, room, description, the device whose load feeds it, dimming (0-10V, ELV, MLV, non-dim or DMX), fixture types, load, emergency, keypads and sensor. Lists and suggestions come from what the workbook already holds.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-03-zones-filter.jpg" alt="Zones filtered to one area and to zones with no device" loading="lazy">
+        <figcaption><span class="n">03</span><h3>Filtering a sheet</h3><p>Narrow the sheet to one area, some text, or the zones with no device yet: the quickest way to map a space's zones to their modules. Devices has the same bar, with “Feeds no zone”.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-04-bulk-entry.jpg" alt="Bulk entry for repeated rooms: a range of rooms and the zones in each" loading="lazy">
+        <figcaption><span class="n">04</span><h3>Bulk entry</h3><p>For rooms that repeat (suites, classrooms, guest rooms): give a numbered range and the zones in each, and Venlux Setup writes every row.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-05-devices.jpg" alt="Devices sheet grouped by bridge, with type, model, bridge, processor and IPID" loading="lazy">
+        <figcaption><span class="n">05</span><h3>Devices</h3><p>Every bridge, module, keypad, sensor and touch panel, grouped under its ZUMNET bridge. Models come from Crestron's list; Fill in IPIDs gives every IP device an IPID on its processor.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-06-processors.jpg" alt="Processors sheet with each processor, its number and the primary" loading="lazy">
+        <figcaption><span class="n">06</span><h3>Processors</h3><p>For sites with several processors: each one, its number, which is the primary, and its address. The deployment summary below lists what each processor will get.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-07-deploy.jpg" alt="deployment.json summary, Pharos logins and the Export and Deploy buttons" loading="lazy">
+        <figcaption><span class="n">07</span><h3>Deploying</h3><p>Export deployment.json, or deploy straight to the processors: the site's files go over SFTP and the program restarts. The processor login is asked for each time and never saved; Pharos logins are used for the export only.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-08-branding.jpg" alt="Branding sheet with logo, colours and a room panel splash preview" loading="lazy">
+        <figcaption><span class="n">08</span><h3>Branding</h3><p>The venue's logo, accent and splash colours, with a preview of the room panel splash and a contrast check. The same settings can be changed later on the master.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/vs-09-check.jpg" alt="Check tab listing warnings with the sheet, row and column of each" loading="lazy">
+        <figcaption><span class="n">09</span><h3>Check</h3><p>Everything the import would refuse or warn about, each linked to its cell: missing addresses, unpatched DMX zones, areas whose zones have no device yet. “Ready to import” means there are no errors.</p></figcaption>
+      </figure>
+
+    </section>
+
+    <section id="master">
+      <header>
+        <div class="eyebrow">2 · Running the site</div>
+        <h2>The master panel</h2>
+        <p>The master runs on a TSW panel, the iPad (Crestron One) or a laptop browser (WebXPanel). It sees every area; what a person may change depends on their level (User, Technician, Administrator).</p>
+      </header>
+
+      <figure>
+        <img src="img/01-areas.jpg" alt="Areas page listing every area with its rooms, zone count, DMX zones and assigned panels" loading="lazy">
+        <figcaption><span class="n">10</span><h3>Areas</h3><p>The home page: every area with its rooms, zones, DMX zones and the room panels assigned to it. The list on the left jumps to any area; the filter shows areas no panel covers yet.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/02-area-zones.jpg" alt="An area page with each zone's description, dimming type and a level slider" loading="lazy">
+        <figcaption><span class="n">11</span><h3>An area's zones</h3><p>Each zone with its description, dimming type, load and emergency mark, and a live level. Set levels here and save them as an area preset. Filters split ZUM, DMX and emergency zones.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/03-scenes.jpg" alt="Site scenes as cards, each listing its load groups and their states" loading="lazy">
+        <figcaption><span class="n">12</span><h3>Site scenes</h3><p>Site-wide scenes and maintenance presets, built from load groups (on, off, a level, and a colour temperature for DMX fixtures). Schedules and integrations can recall them. In this demo the load groups have no zones yet, so the page says so.</p></figcaption>
+      </figure>
+    </section>
+
+    <section id="setup">
+      <header>
+        <div class="eyebrow">3 · Commissioning</div>
+        <h2>Setting up a site</h2>
+        <p>The site arrives from the intake workbook (built in Venlux Setup). Everything on site is set on the master under Setup, saved on the primary processor, and kept over later workbook imports.</p>
+      </header>
+
+      <figure>
+        <img src="img/04-setup-areas.jpg" alt="Setup, Areas tab: areas with rooms, partitions and zone counts" loading="lazy">
+        <figcaption><span class="n">13</span><h3>Setup › Areas</h3><p>Name areas, add new ones, and open an area to split it into rooms, mark rooms that combine, set zone types, close it to integrations, or move zones between areas.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/05-room-editor.jpg" alt="Room editor with name, scene count, sensors, keypads, ramp time and zone selection" loading="lazy">
+        <figcaption><span class="n">14</span><h3>A room</h3><p>A room's name, its scenes (up to six, plus On and Off), occupancy sensors, keypads, raise/lower ramp and zones. <b>Sensors and keypads</b> says who runs them: the ZUM devices' own programming, or the processor.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/06-keypad.jpg" alt="Keypad editor with a drawing of a six-button keypad and each button's engraving and action" loading="lazy">
+        <figcaption><span class="n">15</span><h3>Keypads</h3><p>Pick the keypad's layout and the drawing shows each button with the number the keypad sends. Tap a button to set its engraving and action (a scene, on, off, raise, lower).</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/07-processors.jpg" alt="Setup, Processors tab: each area's processor, with processor status chips" loading="lazy">
+        <figcaption><span class="n">16</span><h3>Setup › Processors</h3><p>Which processor drives each area and zone. Zones on an LCP relay panel and zones fed by a planned device follow that panel's or device's processor automatically; anything not set runs on the primary. Changes reach every processor at once.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/08-occupancy.jpg" alt="Setup, Occupancy tab: a table of rooms with sensor mode and timeouts" loading="lazy">
+        <figcaption><span class="n">17</span><h3>Setup › Occupancy</h3><p>Every room's occupancy in one table: what the sensors do, the timeout, warning and grace. Select rooms to apply an operating mode or copy another room's settings.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/09-room-panels-setup.jpg" alt="Setup, Room panels tab: idle time and technician PIN" loading="lazy">
+        <figcaption><span class="n">18</span><h3>Setup › Room panels</h3><p>How long a room panel waits before going back to its splash, and the technician PIN that unlocks Adjust on room panels.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/10-branding.jpg" alt="Setup, Branding tab with logo, colours and a live room panel splash preview" loading="lazy">
+        <figcaption><span class="n">19</span><h3>Setup › Branding</h3><p>The venue's logo, accent and splash colours, with a live preview of the room panel splash and a contrast check on the accent. Every panel picks it up at once.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/11-import-workbook.jpg" alt="Setup, Import workbook tab" loading="lazy">
+        <figcaption><span class="n">20</span><h3>Setup › Import workbook</h3><p>Bring in a revised intake workbook on site. Its areas, zones and devices replace the old ones; what was set up on site (rooms, keypads, zone edits, device records, users, branding) stays, and the processor keeps a copy of what it replaced.</p></figcaption>
+      </figure>
+    </section>
+
+    <section id="integrations">
+      <header>
+        <div class="eyebrow">4 · Other control systems</div>
+        <h2>Integrations</h2>
+        <p>An AV or building system can recall scenes and presets, set levels, combine rooms and follow the lighting over plain TCP text (port 8094 on the primary). Each integration has its own key, access and scope.</p>
+      </header>
+
+      <figure>
+        <img src="img/12-integration-editor.jpg" alt="Integration editor with name, access, scope and allowed addresses" loading="lazy">
+        <figcaption><span class="n">21</span><h3>Adding an integration</h3><p>Name it, choose Control or Read only, and give it the whole site or chosen areas and rooms. Allowed addresses limit where it may connect from. The key is shown once, when it's made.</p><span class="where">Setup › Integrations (Administrator)</span></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/13-integrator-document-panel.jpg" alt="Integrator document panel with processor address and port, and the integration list" loading="lazy">
+        <figcaption><span class="n">22</span><h3>The integrator document</h3><p>Enter the address the integrator uses to reach the primary, then download a document for that integration and a CSV of its IDs. Send the key separately.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/14-integrator-document.jpg" alt="Integrator document: connection details, access, scope and the command table" loading="lazy">
+        <figcaption><span class="n">23</span><h3>What the integrator receives</h3><p>A printable page for that site and integration: where to connect, the access and scope, how to sign in, and every command. It names the key only by its first part, never the key itself.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/15-integrator-document-events.jpg" alt="Integrator document: error codes, event lines and an example session" loading="lazy">
+        <figcaption><span class="n">24</span><h3>Errors, events and an example</h3><p>The error codes, the live event lines sent after <code>SUBSCRIBE</code>, an example session, and (further down) every room, scene, zone, preset and partition ID the integration can use.</p></figcaption>
+      </figure>
+    </section>
+
+    <section id="devices">
+      <header>
+        <div class="eyebrow">5 · Hardware</div>
+        <h2>Devices and panels</h2>
+        <p>The device plan comes from the intake workbook; on site you find the real devices, match them to the plan and record what Toolbox set. Venlux never changes device settings itself.</p>
+      </header>
+
+      <figure>
+        <img src="img/16-devices-scan.jpg" alt="Devices, Scan tab: found devices with IP, hostname, model and a plan match" loading="lazy">
+        <figcaption><span class="n">25</span><h3>Devices › Scan</h3><p>Finds the Crestron devices on the processor's networks, including the control subnet, and matches them to the plan by name. Confirm or associate each one.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/17-devices-plan.jpg" alt="Devices, Plan tab: ZUMNET bridges grouped by processor with IPIDs and status" loading="lazy">
+        <figcaption><span class="n">26</span><h3>Devices › Plan</h3><p>Every bridge by processor with its IPID and whether it was found, and per bridge the modules recorded so far (Cresnet ID and serial, as set in Toolbox). Export the CSV for <code>Apply-DeviceSetup.ps1</code> and the per-bridge Toolbox sheet.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/18-panels.jpg" alt="Panels page listing master and room panels with processor and assigned areas" loading="lazy">
+        <figcaption><span class="n">27</span><h3>Panels</h3><p>Every touch panel: master or room panel, its processor, whether it's online, and the areas it controls. Open one to assign areas.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/19-users.jpg" alt="Users and access: levels explained and each master panel's standing level" loading="lazy">
+        <figcaption><span class="n">28</span><h3>Users and access</h3><p>People and their levels, and how each master panel behaves with nobody signed in. Administrators make the first account here before backups and commissioning.</p></figcaption>
+      </figure>
+
+      <figure>
+        <img src="img/20-system.jpg" alt="System status tiles and a Needs attention list" loading="lazy">
+        <figcaption><span class="n">29</span><h3>System</h3><p>Health at a glance (processors, zones, ZUM devices, Pharos, panels, sensors, schedules, security) and a list of what needs attention, each with a hint and a link to fix it.</p></figcaption>
+      </figure>
+    </section>
+
+    <section id="room-panels">
+      <header>
+        <div class="eyebrow">6 · In each space</div>
+        <h2>Room panels</h2>
+        <p>Room panels (designed for the 7" TSW-770, 1280 × 800) show only the areas assigned to them, in the simplest form: scenes, one brightness control, and divide or combine.</p>
+      </header>
+
+      <figure class="panel">
+        <img src="img/21-room-splash.jpg" alt="Room panel splash with the venue logo, time, date and room" loading="lazy">
+        <figcaption><span class="n">30</span><h3>Splash</h3><p>The venue's logo, the time and the room. A touch opens the room; it comes back after the idle time.</p></figcaption>
+      </figure>
+
+      <figure class="panel">
+        <img src="img/22-room-screen.jpg" alt="Room screen with scene tiles, All on, Off and a brightness slider" loading="lazy">
+        <figcaption><span class="n">31</span><h3>The room</h3><p>Scenes as tiles, All on and Off, and one brightness control that scales the current scene. The tabs at the top switch between the rooms and areas this panel controls.</p></figcaption>
+      </figure>
+
+      <figure class="panel">
+        <img src="img/23-room-combine.jpg" alt="Divide or combine sheet showing two rooms and the wall between them" loading="lazy">
+        <figcaption><span class="n">32</span><h3>Divide or combine</h3><p>Rooms with a movable wall combine into one, so a scene covers both. A partition sensor, where fitted, does this on its own.</p></figcaption>
+      </figure>
+
+      <figure class="panel">
+        <img src="img/24-room-pin.jpg" alt="Technician PIN pad" loading="lazy">
+        <figcaption><span class="n">33</span><h3>Technician PIN</h3><p>Adjust is behind the PIN set on the master, so visitors can't change the scenes.</p></figcaption>
+      </figure>
+
+      <figure class="panel">
+        <img src="img/25-room-adjust.jpg" alt="Adjust lights: each light with its own slider, rename pencil and Save scene" loading="lazy">
+        <figcaption><span class="n">34</span><h3>Adjust</h3><p>Each light on its own slider. Tap a light's name (✎) to rename it, and save the result as one of the room's scenes.</p></figcaption>
+      </figure>
+
+      <p class="note">The demo site's names and logo are made up; a real site shows its own.</p>
+    </section>
+
+    <footer>Venlux · Integrated Logic Solutions · Screens from Venlux's demo mode, November 2026.</footer>
+  </main>
+</div>
